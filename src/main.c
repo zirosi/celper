@@ -34,7 +34,39 @@ void makeProject(char projectName[50]) {
 void helpPromt(void) {
     printf("celper <command>\n\n");
     printf("-h     --help - Shows the help screen\n");
-    printf("       --version - shows the current version\n");
+    printf("       --version - Shows the current version\n\n");
+    printf("-------------------------------------------------------------\n\n");
+    printf("-m     --make - Makes a new C project\n");
+    printf("-b     --build - Builds a C project using a build.celper file\n");
+}
+
+int build(void) {
+    FILE *pipe = NULL;
+    char buffer[128];
+    
+    // Open pipe to execute command
+    pipe = popen("ls -a | grep \"build.celper\"", "r");
+    if (!pipe) {
+        printf("Failed to open pipe\n");
+        return 0;
+    }
+    
+    if (fgets(buffer, sizeof(buffer), pipe)) {
+        FILE *BUILD = fopen("build.celper", "r");
+
+        char buff[75];
+
+        while (fgets(buff, 75, BUILD)) {
+            system(buff);
+        }
+
+    } else {
+        printf("No build.celper file found\n");
+    }
+    
+    // Close the pipe
+    pclose(pipe);
+    return 1;
 }
 
 int main (int argc, char *argv[]) {
@@ -56,6 +88,15 @@ int main (int argc, char *argv[]) {
             return 0;
         } else if (strcmp(argv[i], "-m") == 0) {
             makeProject(&*argv[i+1]);
+            return 0;
+        } else if (strcpy(argv[i], "--make") == 0) {
+            makeProject(&*argv[i+1]);
+            return 0;
+        } else if (strcmp(argv[i], "-b") == 0) {
+            build();
+            return 0;
+        } else if (strcmp(argv[i], "--build") == 0) {
+            build();
             return 0;
         }
     }

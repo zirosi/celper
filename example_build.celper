@@ -1,0 +1,1 @@
+gcc -o build/<filename> src/main.c

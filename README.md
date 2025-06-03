@@ -1,3 +1,3 @@
 # Celper
-Celper is a simple little helper for the programming language C.
+Celper is a cli tool meant to help C programmers.
 Celper is meant for any level C programmer to increase their productivity.

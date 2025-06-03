@@ -1,36 +1,33 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 
 void makeProject(char projectName[50]) {
     char projectType[50];
-    
     char srcPath[75];
-    strcpy(srcPath, projectName);
-    strcat(srcPath, "/src");
     char buildPath[75];
-    strcpy(srcPath, projectName);
-    strcat(srcPath, "/build");
+    char mainPath[80];
 
-    printf("What project type do you want (basic, raylib)\n");
+    snprintf(srcPath, 75, "%s/src", projectName);
+    snprintf(buildPath, 75, "%s/build", projectName);
+    snprintf(mainPath, 80, "%s/main.c", srcPath);
+
+    printf("What project type do you want (basic)\n");
     printf("> "); scanf("%49s", projectType);
     
     if (strcmp(projectType, "basic") == 0) {
-        char command[80];
-        char command2[80];
-        char command3[80];
+        FILE *main;
 
-        strcpy(command, "mkdir ");
-        strcat(command, projectName);
-        system(command);
+        mkdir(projectName, 0777);
+        mkdir(srcPath, 0777);
+        mkdir(buildPath, 0777);
 
-        strcpy(command3, "mkdir ");
-        strcat(command3, srcPath);
-        system(command3);
-
-        strcpy(command2, "mkdir ");
-        strcat(command2, buildPath);
-        system(command2);
+        main = fopen(mainPath, "w");
+        fclose(main); 
+        
+    } else {
+        printf("%s is not a project type\n", projectType);
     }
 }
 

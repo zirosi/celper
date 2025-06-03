@@ -1,5 +1,38 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
+void makeProject(char projectName[50]) {
+    char projectType[50];
+    
+    char srcPath[75];
+    strcpy(srcPath, projectName);
+    strcat(srcPath, "/src");
+    char buildPath[75];
+    strcpy(srcPath, projectName);
+    strcat(srcPath, "/build");
+
+    printf("What project type do you want (basic, raylib)\n");
+    printf("> "); scanf("%49s", projectType);
+    
+    if (strcmp(projectType, "basic") == 0) {
+        char command[80];
+        char command2[80];
+        char command3[80];
+
+        strcpy(command, "mkdir ");
+        strcat(command, projectName);
+        system(command);
+
+        strcpy(command3, "mkdir ");
+        strcat(command3, srcPath);
+        system(command3);
+
+        strcpy(command2, "mkdir ");
+        strcat(command2, buildPath);
+        system(command2);
+    }
+}
 
 void helpPromt(void) {
     printf("celper <command>\n\n");
@@ -20,8 +53,13 @@ int main (int argc, char *argv[]) {
             return 0;
         } else if (strcmp(argv[i], "-h") == 0) {
             helpPromt();
+            return 0;
         } else if (strcmp(argv[i], "--help") == 0) {
             helpPromt();
+            return 0;
+        } else if (strcmp(argv[i], "-m") == 0) {
+            makeProject(&*argv[i+1]);
+            return 0;
         }
     }
 
